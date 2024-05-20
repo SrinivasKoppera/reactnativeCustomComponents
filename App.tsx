@@ -26,6 +26,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import VideoComponentContainer from './src/components/reactNativeVideo/video-container';
 import SuggestionsComponent from './src/components/suggestionsComponent/suggestions-screen';
+import DigitalSignatureCapture from './src/components/digitalSignatureCapturing/digital-signature-capture-screen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -74,7 +75,8 @@ function App(): React.JSX.Element {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         {/* <VideoComponentContainer /> */}
-        <SuggestionsComponent />
+        {/* <SuggestionsComponent /> */}
+        <DigitalSignatureCapture />
       </ScrollView>
     </SafeAreaView>
   );

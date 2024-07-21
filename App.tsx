@@ -27,6 +27,10 @@ import {
 import VideoComponentContainer from './src/components/reactNativeVideo/video-container';
 import SuggestionsComponent from './src/components/suggestionsComponent/suggestions-screen';
 import DigitalSignatureCapture from './src/components/digitalSignatureCapturing/digital-signature-capture-screen';
+import VisionCameraComponent from './src/components/visionCameraComponent/vision-camera-component';
+import MessageSendComponent from './src/components/sendMsg/send-msg';
+import Payment from './src/components/paymentIntegrations/payment-integration';
+import {StripeProvider} from '@stripe/stripe-react-native';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -66,19 +70,24 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        {/* <VideoComponentContainer /> */}
-        {/* <SuggestionsComponent /> */}
-        <DigitalSignatureCapture />
-      </ScrollView>
-    </SafeAreaView>
+    <StripeProvider publishableKey="pk_test_51NxP87SGBQTt8xinwiKFWgPp37CkIeMq913VXlckNszsysSLvgigkNXJX6a3Z7crelm5MDCAXdUY4x3WzrlWzBJ5002hxoYJIk">
+      {/* <SafeAreaView style={backgroundStyle}> */}
+      {/* <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        /> */}
+      {/* <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={backgroundStyle}> */}
+      {/* <VideoComponentContainer /> */}
+      {/* <SuggestionsComponent /> */}
+      {/* <DigitalSignatureCapture /> */}
+      {/* <VisionCameraComponent /> */}
+      {/* <MessageSendComponent /> */}
+      <Payment />
+      {/* </ScrollView> */}
+      {/* </SafeAreaView> */}
+    </StripeProvider>
   );
 }
 

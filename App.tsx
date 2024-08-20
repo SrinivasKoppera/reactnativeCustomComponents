@@ -31,6 +31,7 @@ import VisionCameraComponent from './src/components/visionCameraComponent/vision
 import MessageSendComponent from './src/components/sendMsg/send-msg';
 import Payment from './src/components/paymentIntegrations/payment-integration';
 import {StripeProvider} from '@stripe/stripe-react-native';
+import PaymentScreen from './src/components/razorPayIntegration/razorpayintegration';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -70,7 +71,11 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <StripeProvider publishableKey="pk_test_51NxP87SGBQTt8xinwiKFWgPp37CkIeMq913VXlckNszsysSLvgigkNXJX6a3Z7crelm5MDCAXdUY4x3WzrlWzBJ5002hxoYJIk">
+    <>
+      <View>
+        <PaymentScreen />
+      </View>
+      {/* <StripeProvider publishableKey="pk_test_51NxP87SGBQTt8xinwiKFWgPp37CkIeMq913VXlckNszsysSLvgigkNXJX6a3Z7crelm5MDCAXdUY4x3WzrlWzBJ5002hxoYJIk"> */}
       {/* <SafeAreaView style={backgroundStyle}> */}
       {/* <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
@@ -84,10 +89,11 @@ function App(): React.JSX.Element {
       {/* <DigitalSignatureCapture /> */}
       {/* <VisionCameraComponent /> */}
       {/* <MessageSendComponent /> */}
-      <Payment />
+      {/* <Payment /> */}
       {/* </ScrollView> */}
       {/* </SafeAreaView> */}
-    </StripeProvider>
+      {/* </StripeProvider> */}
+    </>
   );
 }
 

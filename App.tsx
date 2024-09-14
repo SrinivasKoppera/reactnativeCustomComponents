@@ -32,6 +32,8 @@ import MessageSendComponent from './src/components/sendMsg/send-msg';
 import Payment from './src/components/paymentIntegrations/payment-integration';
 import {StripeProvider} from '@stripe/stripe-react-native';
 import PaymentScreen from './src/components/razorPayIntegration/razorpayintegration';
+import LegalScreen from './src/components/termsAndConditions/main-screen';
+import TermsAndConditions from './src/components/termsAndConditions/specific-view-redirection';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -73,7 +75,8 @@ function App(): React.JSX.Element {
   return (
     <>
       <View>
-        <PaymentScreen />
+        <LegalScreen />
+        {/* <TermsAndConditions /> */}
       </View>
       {/* <StripeProvider publishableKey="pk_test_51NxP87SGBQTt8xinwiKFWgPp37CkIeMq913VXlckNszsysSLvgigkNXJX6a3Z7crelm5MDCAXdUY4x3WzrlWzBJ5002hxoYJIk"> */}
       {/* <SafeAreaView style={backgroundStyle}> */}

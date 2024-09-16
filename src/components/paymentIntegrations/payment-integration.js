@@ -264,20 +264,30 @@
 // export default Payment;
 
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {useStripe} from '@stripe/stripe-react-native';
 
-const Payment = () => {
-  const API_URL = 'http://192.168.0.153:9090';
-  const {initPaymentSheet, presentPaymentSheet} = useStripe();
-  const [loading, setLoading] = useState(false);
+// Define constants
+const API_URL = 'http://192.168.0.153:3000/api/payments';
+const MERCHANT_NAME = 'Merchant Name';
 
+const Payment = () => {
+  const {initPaymentSheet, presentPaymentSheet} = useStripe();
+  const [loading, setLoading] = useState(true);
+
+  // Fetch payment sheet parameters from the server
   const fetchPaymentSheetParams = async () => {
     try {
       const postData = {
         user_type: '2',
         user_id: '30013',
-        amount: 200,
+        amount: 2000,
         cust_name: 'sai',
         cust_phone: '1234567880',
       };
@@ -289,22 +299,19 @@ const Payment = () => {
         body: JSON.stringify(postData),
       });
 
-      const data = await response.json();
-      console.log('Data from server:', data);
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
 
-      const {paymentIntent, ephemeralKey, customer, publishableKey} = data;
-      return {
-        paymentIntent,
-        ephemeralKey,
-        customer,
-        publishableKey,
-      };
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error('Error fetching payment sheet params:', error);
       throw error;
     }
   };
 
+  // Initialize the payment sheet
   const initializePaymentSheet = async () => {
     try {
       const {paymentIntent, ephemeralKey, customer, publishableKey} =
@@ -314,9 +321,8 @@ const Payment = () => {
         customerId: customer,
         customerEphemeralKeySecret: ephemeralKey,
         paymentIntentClientSecret: paymentIntent,
-        merchantDisplayName: 'Merchant Name',
+        merchantDisplayName: MERCHANT_NAME,
         allowsDelayedPaymentMethods: true,
-        // marchantCountryCode:
         defaultBillingDetails: {
           name: 'Jane Doe',
         },
@@ -324,48 +330,46 @@ const Payment = () => {
 
       if (error) {
         console.error('Error initializing payment sheet:', error);
-      } else {
-        console.log('Payment sheet initialized successfully');
-        setLoading(true);
+        throw error;
       }
+      console.log('Payment sheet initialized successfully');
     } catch (error) {
-      console.error('Error in initializePaymentSheet:', error);
+      console.error('Error initializing payment sheet:', error);
+    } finally {
+      setLoading(false); // Ensure loading is set to false even if there's an error
     }
   };
 
+  // Open the payment sheet
   const openPaymentSheet = async () => {
     try {
       const {error} = await presentPaymentSheet();
 
       if (error) {
         console.log(`Error code: ${error.code}`, error.message);
-        alert(`Error: ${error.message}`);
+        alert(`Payment failed: ${error.message}`);
       } else {
-        console.log('Success', 'Your order is confirmed!');
+        console.log('Payment successful', 'Your order is confirmed!');
         alert('Payment successful!');
       }
     } catch (error) {
       console.error('Error presenting payment sheet:', error);
-      alert(`Error: ${error.message}`);
+      alert(`Payment error: ${error.message}`);
     }
   };
 
+  // Initialize payment sheet on component mount
   useEffect(() => {
     initializePaymentSheet();
   }, []);
 
   return (
     <View style={styles.container}>
-      {!loading ? (
-        <Text style={{color: 'black'}}>Loading...</Text>
+      {loading ? (
+        <ActivityIndicator size="large" color="#00aeef" />
       ) : (
-        <TouchableOpacity
-          style={styles.button}
-          disabled={!loading}
-          title="Checkout"
-          color="#841584"
-          onPress={openPaymentSheet}>
-          <Text style={{color: 'white', fontWeight: 'bold'}}>Checkout</Text>
+        <TouchableOpacity style={styles.button} onPress={openPaymentSheet}>
+          <Text style={styles.buttonText}>Checkout</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -375,19 +379,21 @@ const Payment = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
-    marginHorizontal: 100,
-    marginVertical: 100,
   },
   button: {
     backgroundColor: '#00aeef',
-    borderColor: 'red',
-    borderWidth: 5,
     borderRadius: 15,
     height: 50,
     width: 150,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 

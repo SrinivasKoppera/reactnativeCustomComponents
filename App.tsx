@@ -74,28 +74,28 @@ function App(): React.JSX.Element {
 
   return (
     <>
-      <View>
+      {/* <View>
         <LegalScreen />
-        {/* <TermsAndConditions /> */}
-      </View>
-      {/* <StripeProvider publishableKey="pk_test_51NxP87SGBQTt8xinwiKFWgPp37CkIeMq913VXlckNszsysSLvgigkNXJX6a3Z7crelm5MDCAXdUY4x3WzrlWzBJ5002hxoYJIk"> */}
-      {/* <SafeAreaView style={backgroundStyle}> */}
-      {/* <StatusBar
+        <TermsAndConditions />
+      </View> */}
+      <StripeProvider publishableKey="pk_test_51PwPaRGHwmXpGIGPT6JDGkA1rBP7aHBQFMGFY2wM00HVEBIV875vVr59GVrvRN4K4w2SbPFMcf5SXWtQJQ8oby2x00iQl4fe53">
+        {/* <SafeAreaView style={backgroundStyle}> */}
+        {/* <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         /> */}
-      {/* <ScrollView
+        {/* <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={backgroundStyle}> */}
-      {/* <VideoComponentContainer /> */}
-      {/* <SuggestionsComponent /> */}
-      {/* <DigitalSignatureCapture /> */}
-      {/* <VisionCameraComponent /> */}
-      {/* <MessageSendComponent /> */}
-      {/* <Payment /> */}
-      {/* </ScrollView> */}
-      {/* </SafeAreaView> */}
-      {/* </StripeProvider> */}
+        {/* <VideoComponentContainer /> */}
+        {/* <SuggestionsComponent /> */}
+        {/* <DigitalSignatureCapture /> */}
+        {/* <VisionCameraComponent /> */}
+        {/* <MessageSendComponent /> */}
+        <Payment />
+        {/* </ScrollView> */}
+        {/* </SafeAreaView> */}
+      </StripeProvider>
     </>
   );
 }
